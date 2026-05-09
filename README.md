@@ -2,6 +2,12 @@
 
 A beautiful, mobile-first weekly diet routine web page built with pure **HTML** and **CSS** — no frameworks, no installs, no server needed.
 
+## 🚀 How to Use
+
+<a href="https://tbdiet.shtar.space" target="_blank" rel="noopener noreferrer">
+  <img src="https://img.shields.io/badge/Open-Live%20Site-black?style=for-the-badge" alt="Open Live Site">
+</a>
+
 ## ✨ Features
 
 - 📅 **7-day diet plan** with time-based meals for every day of the week
@@ -12,8 +18,6 @@ A beautiful, mobile-first weekly diet routine web page built with pure **HTML** 
 - 📱 **Mobile-first** — designed and optimized for phone screens
 
 ## 🚀 How to Use
-
-tbdiet.shtar.space
 
 ```
 index.html   ← page structure + JavaScript
