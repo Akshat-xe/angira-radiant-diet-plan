@@ -13,27 +13,13 @@ A beautiful, mobile-first weekly diet routine web page built with pure **HTML** 
 
 ## 🚀 How to Use
 
-Just open `index.html` in any browser — on your phone, laptop, or PC. No setup required.
+Just open `tbdiet.shtar.space` in any browser — on your phone, laptop, or PC. No setup required.
 
 ```
 index.html   ← page structure + JavaScript
 styles.css   ← all styling
 ```
 
-## 📋 Diet Schedule
-
-Each day includes 8 timed entries:
-
-| Time | Slot |
-|------|------|
-| 5:00 am | Wake up |
-| 6:00 am | Breakfast |
-| 8:30–9:00 am | Mid-morning |
-| 11:30 am–12:00 pm | Lunch |
-| 2:30 pm | Afternoon snack |
-| 5:30 pm | Evening snack |
-| 8:00 pm | Dinner |
-| 9:15 pm | Night milk |
 
 ## 🛠 Built With
 
