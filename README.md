@@ -24,10 +24,6 @@ Auto-highlights today's plan the moment you open it, supports an English ↔ Hin
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
 
-## Run Locally
-
-Download the project and open `index.html` in any browser — no server, no build step, no setup.
-
 ---
 
 *Stay consistent. Stay nourished.*
