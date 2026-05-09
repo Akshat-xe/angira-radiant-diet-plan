@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<meta name="theme-color" content="#1c2d4a"/>
+<title>Angira Diet Routine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- Background -->
+<div class="bg">
+  <div class="bg-grad"></div>
+  <svg class="bg-waves" viewBox="0 0 1440 500" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,260 C240,200 480,165 720,185 C960,205 1200,265 1440,245 L1440,500 L0,500Z" fill="rgba(28,45,74,.52)"/>
+    <path d="M0,300 C200,255 440,228 700,242 C960,256 1200,305 1440,282 L1440,500 L0,500Z" fill="rgba(47,72,120,.42)"/>
+    <path d="M0,340 C180,308 420,288 700,300 C980,312 1220,352 1440,332 L1440,500 L0,500Z" fill="rgba(88,120,160,.32)"/>
+    <path d="M0,378 C200,355 440,340 720,350 C1000,360 1240,385 1440,368 L1440,500 L0,500Z" fill="rgba(168,184,204,.26)"/>
+    <path d="M0,408 C220,392 460,380 720,389 C980,398 1220,420 1440,406 L1440,500 L0,500Z" fill="rgba(210,194,168,.22)"/>
+  </svg>
+</div>
+
+<!-- Language toggle -->
+<button class="lang-btn" onclick="toggleLang()" aria-label="Toggle language">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+  </svg>
+  <span id="lang-lbl">हिं</span>
+</button>
+
+<div class="page">
+  <!-- Hero -->
+  <header class="hero">
+    <div class="badge">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l1.8 5.4H20l-4.9 3.6 1.8 5.5L12 13l-4.9 3.5 1.8-5.5L4 7.4h6.2Z"/></svg>
+      <span data-en="Wellness Dashboard" data-hi="स्वास्थ्य डैशबोर्ड">Wellness Dashboard</span>
+    </div>
+    <h1 class="hero-title" data-en="Angira Diet Routine" data-hi="अंगीरा डाइट रूटीन">Angira Diet Routine</h1>
+    <p class="hero-sub" data-en="A 7-day repeating diet routine, beautifully laid out for every hour of your day." data-hi="7 दिन का दोहराव वाला डाइट रूटीन, दिन के हर समय के लिए।">A 7-day repeating diet routine, beautifully laid out for every hour of your day.</p>
+    <div class="hero-bottom">
+      <div>
+        <div class="hero-date" id="hdate"></div>
+        <div class="hero-time" id="htime">--:-- --</div>
+      </div>
+      <div class="tap-hint" data-en="Tap to view today's plan" data-hi="आज की योजना देखने के लिए टैप करें">Tap to view today's plan</div>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <div class="divider">
+      <div class="div-line"></div>
+      <div class="div-label" data-en="Weekly Plan" data-hi="साप्ताहिक योजना">Weekly Plan</div>
+      <div class="div-line"></div>
+    </div>
+
+    <div class="days" id="days"></div>
+
+    <div class="footer" data-en="Stay consistent. Stay nourished." data-hi="नियमित रहें। पोषित रहें।">Stay consistent. Stay nourished.</div>
+  </div>
+</div>
+
+<script>
+const TIMINGS = [
+  {en:"5:00 am",      hi:"सुबह 5:00"},
+  {en:"6:00 am",      hi:"सुबह 6:00"},
+  {en:"8:30–9:00 am", hi:"सुबह 8:30–9:00"},
+  {en:"11:30 am–12:00 pm",hi:"सुबह 11:30–दोपहर 12:00"},
+  {en:"2:30 pm",      hi:"दोपहर 2:30"},
+  {en:"5:30 pm",      hi:"शाम 5:30"},
+  {en:"8:00 pm",      hi:"रात 8:00"},
+  {en:"9:15 pm",      hi:"रात 9:15"},
+];
+const WAKE = {
+  en:"Wake up, TB medicines with water if prescribed fasting",
+  hi:"उठें, यदि खाली पेट लेने को कहा गया हो तो पानी के साथ TB की दवाइयाँ लें"
+};
+const DAYS = [
+  {en:"Monday",hi:"सोमवार",meals:[
+    {en:"Vegetable poha with peanuts + plain curd",hi:"सब्ज़ी वाला पोहा मूँगफली के साथ + सादा दही"},
+    {en:"Papaya + sattu drink",hi:"पपीता + सत्तू का शरबत"},
+    {en:"Rice + rajma + lauki sabzi + little curd",hi:"चावल + राजमा + लौकी की सब्ज़ी + थोड़ा दही"},
+    {en:"Buttermilk (chaas) + 1 besan chilla",hi:"छाछ + 1 बेसन चीला"},
+    {en:"Roasted makhana or roasted peanuts + chana",hi:"भुने मखाने या भुनी मूँगफली + चना"},
+    {en:"Moong-masoor khichdi with 1 tsp ghee + paneer bhurji",hi:"मूँग-मसूर खिचड़ी 1 चम्मच घी के साथ + पनीर भुर्जी"},
+    {en:"Milk",hi:"दूध"},
+  ]},
+  {en:"Tuesday",hi:"मंगलवार",meals:[
+    {en:"2 besan-paneer chilla + curd",hi:"2 बेसन-पनीर चीला + दही"},
+    {en:"Watermelon / muskmelon",hi:"तरबूज़ / खरबूज़ा"},
+    {en:"Kadhi-chawal + soft cooked pumpkin or lauki",hi:"कढ़ी-चावल + अच्छे से पका हुआ कद्दू या लौकी"},
+    {en:"Curd + soaked raisins",hi:"दही + भीगी हुई किशमिश"},
+    {en:"Sattu milk drink",hi:"सत्तू वाला दूध"},
+    {en:"2 soft phulka + chana dal + spinach/lauki sabzi",hi:"2 नरम फुल्के + चना दाल + पालक/लौकी की सब्ज़ी"},
+    {en:"Milk",hi:"दूध"},
+  ]},
+  {en:"Wednesday",hi:"बुधवार",meals:[
+    {en:"Milk dalia with raisins + chopped dates + peanut powder",hi:"दूध वाला दलिया किशमिश + कटे हुए खजूर + मूँगफली पाउडर के साथ"},
+    {en:"Chaas + 1 fruit",hi:"छाछ + 1 फल"},
+    {en:"Peas-paneer pulao + raita",hi:"मटर-पनीर पुलाव + रायता"},
+    {en:"Papaya bowl",hi:"पपीते का बाउल"},
+    {en:"1 small handful peanuts + 1 small banana (only if it does not worsen constipation)",hi:"1 छोटी मुट्ठी मूँगफली + 1 छोटा केला (केवल तब जब कब्ज़ न बढ़ाए)"},
+    {en:"Rice + soft chole + pumpkin sabzi",hi:"चावल + नरम छोले + कद्दू की सब्ज़ी"},
+    {en:"Milk",hi:"दूध"},
+  ]},
+  {en:"Thursday",hi:"गुरुवार",meals:[
+    {en:"3 idli + sambar",hi:"3 इडली + सांभर"},
+    {en:"Papaya or pear/apple if available",hi:"पपीता या नाशपाती/सेब (यदि उपलब्ध हो)"},
+    {en:"Rice + moong dal tadka + mixed veg + 1 tsp ghee",hi:"चावल + मूँग दाल तड़का + मिक्स सब्ज़ी + 1 चम्मच घी"},
+    {en:"Lassi / thin curd drink",hi:"लस्सी / पतली दही"},
+    {en:"Roasted chana + 2 dates",hi:"भुना चना + 2 खजूर"},
+    {en:"Vegetable daliya khichdi + paneer cubes / paneer bhurji",hi:"सब्ज़ी वाली दलिया खिचड़ी + पनीर के टुकड़े / पनीर भुर्जी"},
+    {en:"Milk",hi:"दूध"},
+  ]},
+  {en:"Friday",hi:"शुक्रवार",meals:[
+    {en:"2 small paneer paratha + curd",hi:"2 छोटे पनीर पराठे + दही"},
+    {en:"Watermelon / muskmelon",hi:"तरबूज़ / खरबूज़ा"},
+    {en:"Rice + mixed dal + soy or paneer curry",hi:"चावल + मिक्स दाल + सोया या पनीर की सब्ज़ी"},
+    {en:"Buttermilk + papaya",hi:"छाछ + पपीता"},
+    {en:"Homemade milk shake: milk + 1 date + peanut powder",hi:"घर का मिल्क शेक: दूध + 1 खजूर + मूँगफली पाउडर"},
+    {en:"Kadhi + rice + soft cooked veg",hi:"कढ़ी + चावल + अच्छे से पकी सब्ज़ी"},
+    {en:"Milk",hi:"दूध"},
+  ]},
+  {en:"Saturday",hi:"शनिवार",meals:[
+    {en:"Suji upma with peanuts and vegetables + curd",hi:"सूजी का उपमा मूँगफली और सब्ज़ियों के साथ + दही"},
+    {en:"1 small mango or ½ large mango",hi:"1 छोटा आम या ½ बड़ा आम"},
+    {en:"Rice + cholar dal / arhar dal + beet/lauki sabzi",hi:"चावल + चोलार दाल / अरहर दाल + चुकंदर/लौकी की सब्ज़ी"},
+    {en:"Chaas + 1 besan chilla",hi:"छाछ + 1 बेसन चीला"},
+    {en:"Roasted makhana",hi:"भुने मखाने"},
+    {en:"Rice + masoor dal + paneer bhurji",hi:"चावल + मसूर दाल + पनीर भुर्जी"},
+    {en:"Milk",hi:"दूध"},
+  ]},
+  {en:"Sunday",hi:"रविवार",meals:[
+    {en:"2 moong dal chilla + curd",hi:"2 मूँग दाल चीला + दही"},
+    {en:"Muskmelon / watermelon",hi:"खरबूज़ा / तरबूज़"},
+    {en:"Vegetable pulao + plain curd + small bowl chana/paneer gravy",hi:"सब्ज़ी वाला पुलाव + सादा दही + छोटा बाउल चना/पनीर की ग्रेवी"},
+    {en:"Papaya + soaked raisins",hi:"पपीता + भीगी हुई किशमिश"},
+    {en:"Sattu drink",hi:"सत्तू का शरबत"},
+    {en:"Soft rice + moong dal + 1 tsp ghee + cooked vegetables",hi:"नरम चावल + मूँग दाल + 1 चम्मच घी + पकी हुई सब्ज़ियाँ"},
+    {en:"Milk",hi:"दूध"},
+  ]},
+];
+
+// today: JS getDay() Sun=0..Sat=6 → Mon=0..Sun=6
+const TODAY = (new Date().getDay() + 6) % 7;
+let lang = 'en';
+let openIdx = TODAY;
+
+// ── Build cards ──
+const clockSVG = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" d="M12 6v1m0 10v1M6 12H5m14 0h-1"/></svg>`;
+const sunSVG   = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path stroke-linecap="round" d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
+const starSVG  = `<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l1.8 5.4H20l-4.9 3.6 1.8 5.5L12 13l-4.9 3.5 1.8-5.5L4 7.4h6.2Z"/></svg>`;
+const chevSVG  = `<svg class="chevron" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>`;
+
+function buildCards() {
+  const container = document.getElementById('days');
+  container.innerHTML = '';
+  DAYS.forEach((d, i) => {
+    const isToday = i === TODAY;
+    const isOpen  = i === openIdx;
+
+    let mealsHTML = `
+      <div class="meal wake-row">
+        <div class="dot wake">${sunSVG}</div>
+        <div class="vline"></div>
+        <div class="mc">
+          <div class="mt" data-en="${TIMINGS[0].en}" data-hi="${TIMINGS[0].hi}">${TIMINGS[0][lang]}</div>
+          <div class="mb" data-en="${WAKE.en}" data-hi="${WAKE.hi}">${WAKE[lang]}</div>
+        </div>
+      </div>`;
+
+    d.meals.forEach((m, j) => {
+      const last = j === d.meals.length - 1;
+      mealsHTML += `
+        <div class="meal">
+          <div class="dot reg">${clockSVG}</div>
+          ${last ? '' : '<div class="vline"></div>'}
+          <div class="mc">
+            <div class="mt" data-en="${TIMINGS[j+1].en}" data-hi="${TIMINGS[j+1].hi}">${TIMINGS[j+1][lang]}</div>
+            <div class="mb" data-en="${m.en}" data-hi="${m.hi}">${m[lang]}</div>
+          </div>
+        </div>`;
+    });
+
+    const card = document.createElement('div');
+    card.className = 'card' + (isToday ? ' today' : '') + (isOpen ? ' open' : '');
+    card.id = 'c' + i;
+    card.innerHTML = `
+      <div class="top-bar"></div>
+      <div class="card-hd" onclick="toggle(${i})">
+        <div class="hd-left">
+          <div class="num">${i+1}</div>
+          <div>
+            <div class="day-name" data-en="${d.en}" data-hi="${d.hi}">${d[lang]}</div>
+            <div class="day-sub" data-en="Day ${i+1}" data-hi="दिन ${i+1}">${lang==='en'?'Day':'दिन'} ${i+1}</div>
+          </div>
+        </div>
+        <div class="hd-right">
+          <span class="today-pill">${starSVG}<span data-en="Today" data-hi="आज">${lang==='en'?'Today':'आज'}</span></span>
+          ${chevSVG}
+        </div>
+      </div>
+      <div class="card-body" id="b${i}">
+        <div class="sep"></div>
+        <div class="meals">${mealsHTML}</div>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+// ── Toggle ──
+function toggle(i) {
+  const prev = openIdx;
+  openIdx = openIdx === i ? -1 : i;
+  if (prev !== -1) document.getElementById('c'+prev)?.classList.remove('open');
+  if (openIdx !== -1) document.getElementById('c'+openIdx)?.classList.add('open');
+}
+
+// ── Clock ──
+function tick() {
+  const now = new Date();
+  const loc = lang === 'en' ? 'en-US' : 'hi-IN';
+  document.getElementById('hdate').textContent = now.toLocaleDateString(loc,{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('htime').textContent = now.toLocaleTimeString(loc,{hour:'numeric',minute:'2-digit',hour12:true});
+}
+tick(); setInterval(tick, 1000);
+
+// ── Lang toggle ──
+function toggleLang() {
+  lang = lang === 'en' ? 'hi' : 'en';
+  document.getElementById('lang-lbl').textContent = lang === 'en' ? 'हिं' : 'EN';
+  // update all data-en/hi text nodes
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const v = el.getAttribute('data-' + lang);
+    if (v !== null) el.textContent = v;
+  });
+  tick();
+  // rebuild cards so day sub-labels re-render correctly
+  buildCards();
+  if (openIdx !== -1) document.getElementById('c'+openIdx)?.classList.add('open');
+}
+
+// ── Init ──
+buildCards();
+// scroll today into view
+setTimeout(() => document.getElementById('c'+TODAY)?.scrollIntoView({behavior:'smooth',block:'nearest'}), 700);
+</script>
+</body>
+</html>
